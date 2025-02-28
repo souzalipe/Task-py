@@ -9,17 +9,17 @@ cursor = conexao.cursor()
 
 cursor.execute("""
                CREATE TABLE IF NOT EXISTS clientes (
-               id INTERGER PRIMARY KEY AUTOINCREMENT,
+               id INTEGER PRIMARY KEY AUTOINCREMENT,
                nome TEXT NOT NULL,
-               idade INTERGER
+               idade INTEGER
                )
                """)
 
 # Inserindo dados na tabela
 
-cursor.execute("INSERT INTO usuarios (nome, idade) VALUES ('Felipe', 25)")
-cursor.execute("INSERT INTO usuarios (nome, idade) VALUES ('Débora', 22)")
-cursor.execute("INSERT INTO usuarios (nome, idade) VALUES ('Brenda', 28)")
+cursor.execute("INSERT INTO clientes (nome, idade) VALUES ('Felipe', 25)")
+cursor.execute("INSERT INTO clientes (nome, idade) VALUES ('Débora', 22)")
+cursor.execute("INSERT INTO clientes (nome, idade) VALUES ('Brenda', 28)")
 
 # Salvando as alterações
 
