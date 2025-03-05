@@ -1,31 +1,21 @@
 import sqlite3
+import pandas as pd
+from tabulate import tabulate  # Biblioteca para exibição bonita
 
 def buscar_usuario_por_id(user_id):
     conexao = sqlite3.connect("meubanco.bd")
-    cursor = conexao.cursor()
-
-    cursor.execute("SELECT * FROM clientes WHERE id = ?", (user_id,))
-    usuario = cursor.fetchone()
-
+    query = f"SELECT * FROM clientes WHERE id = {user_id}"
+    df = pd.read_sql_query(query, conexao)
     conexao.close()
 
-    if usuario:
-        print("\n--- Cliente encontrado ---")
-        print(f"ID: {usuario[0]}")
-        print(f"Nome: {usuario[1]}")
-        print(f"Idade: {usuario[2]}\n")
+    if not df.empty:
+        print("\nUsuário encontrado:\n")
+        print(tabulate(df, headers="keys", tablefmt="grid"))  # Formato de tabela
     else:
-        print("\nCliente não encontrado.\n")
+        print("\nUsuário não encontrado.\n")
 
-# Loop para permitir múltiplas buscas
-while True:
-    id_desejado = input("Digite o ID do usuário (ou 'sair' para encerrar): ")
-
-    if id_desejado.lower() == "sair":
-        print("Encerrando...")
-        break
-
-    if id_desejado.isdigit():
-        buscar_usuario_por_id(int(id_desejado))
-    else:
-        print("Por favor, digite um número válido.\n")
+id_desejado = input("Digite o ID do usuário: ")
+if id_desejado.isdigit():
+    buscar_usuario_por_id(int(id_desejado))
+else:
+    print("Por favor, digite um número válido.")
